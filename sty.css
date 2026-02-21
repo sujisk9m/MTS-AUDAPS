@@ -1,0 +1,961 @@
+:root {
+  /* Professional Marine Technology Theme */
+
+  --bg: #ffffff;
+  --panel: #f8f9fa;
+
+  --accent: #1E4B8F;        /* Primary Blue */
+  --accent2: #1CA3EC;       /* Lighter Blue */
+  --accent-dark: #002F47;   /* Dark Navy Blue */
+
+  --violet: #2c3e50;        /* Dark Blue/Grey - Secondary */
+  --muted: rgba(0, 0, 0, 0.5);
+
+  --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  --red-glow: rgba(30, 75, 143, 0.1);  /* Subtle Blue Glow */
+
+  --text-main: #333333;
+  --text-light: #666666;
+}
+
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Allow vertical scrolling on mobile */
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Allow vertical scrolling */
+  background-color: var(--bg);
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Navigation Bar */
+.navbar {
+  background: linear-gradient(
+    to right,
+    #005A8C 0%,
+    #005A8C 50%,
+    #002F47 50%,
+    #002F47 100%
+  );
+  border-radius: 18px;
+  margin: 20px auto;
+  max-width: 1400px;
+  padding: 6px;
+  border-bottom:none;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  text-shadow: none;
+}
+
+.logo-icon {
+  font-size: 20px;
+}
+
+.logo-text {
+  display: inline;
+  white-space: nowrap;
+  color: #ffffff;
+}
+
+@media(min-width: 768px) {
+  .logo-text {
+    display: inline;
+  }
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.nav-toggle .bar {
+  width: 25px;
+  height: 3px;
+  background: #ffffff;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.nav-toggle.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.nav-toggle.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile Navigation */
+@media(max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 50px;
+    flex-direction: column;
+    background: #2e5378;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(52, 93, 128, 0.2);
+    border-top: 1px solid rgba(25, 36, 42, 0.1);
+    padding: 20px 0;
+    gap: 0;
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-item {
+    margin: 10px 0;
+  }
+
+  .nav-link {
+    padding: 12px;
+    width: 100%;
+  }
+
+  .logo-text {
+    color: #ffffff;
+    text-align: center;
+    margin: 8px 0;
+    text-shadow: none;
+    font-size: 20px;
+  }
+}
+
+.wrap {
+  padding: 12px 18px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 70px);
+  /* Minimum height minus navbar */
+  height: auto;
+  overflow-y: visible;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.small {
+  font-size: 11px;
+  color: #555555;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.large {
+  display: inline-block;
+  font-size: 36px;
+  font-weight: 800;
+
+  background: linear-gradient(
+    #1CA3EC 50%,
+    #1CA3EC 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+
+
+/* Row Layouts - Compact */
+.row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+}
+
+.first-row {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  /* Prevent stretching to match tallest */
+  margin-bottom: 12px;
+}
+
+.first-row>.card {
+  flex: 1;
+  width: 0;
+  /* Forces equal width regardless of content */
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.header-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent2);
+}
+
+/* Speed Card Specifics */
+.speed-content {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.speed-gauge-wrap {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.speed-params {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+}
+
+/* Second Row Container */
+.second-row-container {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-dashboard-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* Allow scrolling if content overflows */
+}
+
+.section-title {
+  margin-bottom: 10px;
+  color: var(--accent);
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 4px;
+}
+
+.trend-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.records-section {
+  margin-top: auto;
+  /* Pushes to bottom if space permits */
+}
+
+/* Remove old specific row styles if they conflict */
+.second-row>.trend-card,
+.second-row>.records-card {
+  /* Deprecated */
+  color: #002F47;
+}
+
+/* Card Base - Professional */
+.card {
+  padding: 16px;
+  border-radius: 6px;
+  background: #ffffff;
+  backdrop-filter: none;
+  box-shadow:#1CA3EC;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+  position: relative;
+  /* For Pseudo-elements */
+  overflow: hidden;
+  /* Keep corners inside */
+  animation: fadeSlideIn 0.5s ease-out forwards;
+}
+
+/* Entry Animation */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Maroon Box Corners */
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--accent);
+  /* Maroon */
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+/* Top-Left Corner */
+.card::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 4px;
+}
+
+/* Bottom-Right Corner */
+.card::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 4px;
+}
+
+/* Hover Effect for Corners */
+.card:hover::before,
+.card:hover::after {
+  width: 100%;
+  height: 100%;
+  border-color:#1E4B8F;
+  /* Fades into full border or expands */
+  border-width: 1px;
+  border-radius: 6px;
+}
+
+.card:hover {
+  border-color: #cccccc;
+  box-shadow: 0 4px 12px rgba(15, 76, 120, 0.15);
+}
+
+/* Speed Indicator Card */
+.speed-card {
+  border-top: 3px solid var(--accent);
+}
+
+.speed-card:hover {
+  box-shadow: 0 4px 12px rgba(59, 91, 113, 0.15);
+}
+
+/* Parameter Overview Card */
+.param-overview-card {
+  border-top: 3px solid var(--accent);
+}
+
+.param-overview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 3D Simulation Card */
+#cansat-3d {
+  width: 100%;
+  height: 280px;
+  border-radius: 4px;
+}
+
+
+/* Trend Charts Card */
+.trend-card {
+  border-top: 3px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  min-height: 0;
+}
+
+/* Recent Records Card */
+.records-card {
+  border-top: 3px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Status Pill */
+.status-pill {
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #f1f1f1;
+  color: #333;
+  font-weight: 700;
+  border: 1px solid #ccc;
+  font-size: 11px;
+}
+
+/* Speed Gauge - Compact */
+.speed-gauge-wrap {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#speedGauge {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Parameter Rows */
+.param-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 12px;
+  color: #444;
+}
+
+.param-row:last-child {
+  border-bottom: none;
+}
+
+.ov-value {
+  font-weight: 700;
+  color: #222;
+  /* Darker value text */
+  font-size: 13px;
+}
+
+/* 3D Simulation - Static Professional Look */
+.sim-wrap {
+  height: 180px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(180deg, #e6f3ff 0%, #dbeafe 100%);
+  /* Light blue gradient */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cbd5e1;
+}
+
+.cansat-img {
+  position: relative;
+  width: 60%;
+  max-width: 180px;
+  height: auto;
+  z-index: 3;
+}
+
+/* Animation removed */
+.cansat-anim {
+  animation: none;
+}
+
+.cansat-glow {
+  display: none;
+}
+
+.bubble-layer {
+  display: none;
+}
+
+.shimmer {
+  display: none;
+}
+
+/* Trend Charts Grid - 3 Columns (3x2 Grid) */
+.trend-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 Columns */
+  gap: 12px;
+  margin-top: 10px;
+  flex: 1;
+  min-height: 0;
+  overflow: visible;
+}
+
+.trend-card-item {
+  padding: 10px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  min-height: 0;
+}
+
+.trend-title {
+  text-align: center;
+  font-weight: 700;
+  color: var(--accent);
+  /* Maroon */
+  margin-bottom: 6px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Force visibility with high specificity */
+div.page-visible,
+#dashboard-page.page-visible,
+#analytics-page.page-visible {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+div.page-hidden {
+  display: none !important;
+}
+
+#cansat-3d {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  display: block;              
+}
+
+canvas {
+  width: 100% !important;
+  display: block !important;
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+}
+
+#tdsTrend,
+#turTrend,
+#PreTrend,
+#itempTrend,
+#etempTrend,
+#condTrend {
+  height: 180px !important;
+  min-height: 120px;
+  max-height: 180px;
+}
+
+/* Table Styles - Professional */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #333;
+  font-size: 11px;
+}
+
+table thead {
+  background: #f8fafc;
+  border-bottom: 2px solid var(--accent);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+table th {
+  padding: 8px;
+  text-align: left;
+  color: var(--accent);
+  font-weight: 700;
+  border-right: 1px solid #e2e8f0;
+  font-size: 11px;
+}
+
+table th:last-child {
+  border-right: none;
+}
+
+table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  border-right: 1px solid #f1f5f9;
+  font-size: 11px;
+  color: #475569;
+}
+
+table td:last-child {
+  border-right: none;
+}
+
+table tbody tr:hover {
+  background: #fef2f2;
+  /* Light maroon tint */
+}
+
+/* Records table container */
+.table-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  max-height: 200px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.table-container-small {
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+/* Responsive - Tablet and Half Screen */
+@media(max-width: 1200px) {
+  .wrap {
+    padding: 10px;
+  }
+
+  .trend-grid {
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 columns on tablet */
+    gap: 10px;
+  }
+
+  .first-row {
+    flex-wrap: wrap;
+    /* Allow wrapping on smaller screens */
+  }
+
+  .first-row>.card {
+    flex: 1 1 calc(50% - 10px);
+    /* 2 per row */
+    min-width: 250px;
+  }
+}
+
+/* Responsive - Mobile */
+@media(max-width: 768px) {
+  .wrap {
+    padding: 8px;
+    min-height: calc(100vh - 50px);
+    height: auto;
+    overflow-y: visible;
+    overflow-x: hidden;
+  }
+
+  html,
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 16px;
+    margin: 4px 0 8px 0;
+    color: var(--accent);
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .row>.card {
+    flex: 0 0 auto;
+    min-height: 0;
+  }
+
+  .first-row {
+    flex-wrap: nowrap;
+  }
+
+  .first-row>.card {
+    min-width: 100%;
+  }
+
+  .second-row {
+    flex-direction: column;
+  }
+
+  .trend-grid {
+    grid-template-columns: 1fr;
+    /* 1 Column on mobile */
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .trend-card-item {
+    padding: 10px;
+    min-height: 120px;
+  }
+
+  .trend-title {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .speed-gauge-wrap {
+    width: 100px;
+    height: 100px;
+  }
+
+  .sim-wrap {
+    height: 120px;
+  }
+
+  .cansat-img {
+    width: 48%;
+    max-width: 120px;
+  }
+
+  .param-overview-content {
+    gap: 6px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .second-row>.trend-card {
+    flex: 0 0 auto;
+    max-height: none;
+  }
+
+  .second-row>.records-card {
+    flex: 0 0 auto;
+    max-height: 200px;
+  }
+
+  .table-container {
+    max-height: 180px;
+  }
+
+  .small {
+    font-size: 10px;
+  }
+
+  /* Analytics page mobile */
+  .analytics-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .analytics-chart-card {
+    min-height: 250px !important;
+  }
+
+  #analyticsChart {
+    height: 250px !important;
+    min-height: 250px !important;
+    max-height: 250px !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+}
+
+/* Page Content */
+.page-content {
+  display: block;
+  flex-direction: column;
+}
+
+/* Simulation Page */
+.simulation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  
+}
+
+.sim-full-card {
+  height: auto;
+}
+
+.sim-wrap-full {
+  height: 350px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #e6f3ff 0%, #dbeafe 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cbd5e1;
+}
+
+.sim-controls-card {
+  height: auto;
+}
+
+.sim-params-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.sim-param-item {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.sim-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #334155;
+  margin-top: 4px;
+}
+
+/* Analytics Page */
+.analytics-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.analytics-card {
+  padding: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.stat-item {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.export-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.export-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.export-btn:hover {
+  background: var(--accent2);
+}
+
+.analytics-chart-card {
+  min-height: 350px;
+}

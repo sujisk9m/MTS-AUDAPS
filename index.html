@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Marine Technology System</title>
+
+  <!-- load external css file -->
+  <link rel="stylesheet" href="sty.css">
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+</head>
+
+<body>
+  <div id="debug-error-log"
+    style="position:fixed; top:0; left:0; width:100%; background:red; color:white; z-index:9999; display:none; padding:10px; font-family:monospace;">
+  </div>
+  <script>
+    window.onerror = function (msg, url, line) {
+      var el = document.getElementById('debug-error-log');
+      el.style.display = 'block';
+      el.innerHTML += "Error: " + msg + "<br>Line: " + line + "<br>";
+    };
+  </script>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-icon">🌊</span>
+        <span class="logo-text">Marine Technology System</span>
+      </div>
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="#dashboard" class="nav-link active">DASHBOARD</a></li>
+      </ul>
+      <div class="nav-toggle" id="navToggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Page -->
+  <div class="wrap page-content" id="dashboard-page">
+    <div class="large">DASHBOARD</div>
+    <!-- First Row: Speed Indicator, Parameter Overview, 3D Simulation -->
+    <div class="first-row">
+      <!-- Speed Indicator -->
+      <div class="card speed-card">
+        <div class="card-header">
+          <div class="small">SPEED INDICATOR</div>
+          <div id="speedVal" class="header-value">0%</div>
+        </div>
+        <div class="speed-content">
+          <div class="speed-gauge-wrap">
+            <canvas id="speedGauge"></canvas>
+          </div>
+          <div class="speed-params">
+            <div class="param-row">
+              <div class="small">TDS</div>
+              <div class="ov-value">
+                <span id="tdsNow">--</span>
+              </div>
+            </div>
+            <div class="param-row">
+              <div class="small">Turbidity</div>
+              <div class="ov-value">
+                <span id="turbNow">--</span>
+              </div>
+            </div>
+            <div class="param-row">
+              <div class="small">Pressure</div>
+              <div class="ov-value">
+                <span id="pressNow">--</span>
+              </div>
+            </div>
+            <div class="param-row">
+              <div class="small">Int. Temp</div>
+              <div class="ov-value">
+                <span id="intTempNow">--</span>
+              </div>
+            </div>
+            <!-- Acceleration XYZ -->
+            <div class="param-row">
+              <div class="small">Acceleration</div>
+              <div class="ov-value">
+                X: <span id="ovAccX">--</span>
+                Y: <span id="ovAccY">--</span>
+                Z: <span id="ovAccZ">--</span>
+              </div>
+            </div>
+            <!-- Gyroscope XYZ -->
+            <div class="param-row">
+              <div class="small">Gyroscopic</div>
+              <div class="ov-value">
+                X: <span id="ovGyroX">--</span>
+                Y: <span id="ovGyroY">--</span>
+                Z: <span id="ovGyroZ">--</span>
+              </div>
+            </div>
+            <div class="param-row">
+              <div class="small">Ext. Temp</div>
+              <div class="ov-value">
+                <span id="extTempNow">--</span>
+              </div>
+            </div>
+            <div class="param-row">
+              <div class="small">Conductivity</div>
+              <div class="ov-value">
+                <span id="condNow">--</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parameter Overview -->
+      <div class="card param-overview-card">
+        <div class="card-header">
+          <div class="small">PARAMETER OVERVIEW</div>
+        </div>
+        <div class="param-overview-content">
+          <div class="param-row">
+            <div class="small">TDS</div>
+              <div class="ov-value">
+                <span id="paramTds">--</span>
+              </div>
+            </div>
+          <div class="param-row">
+            <div class="small">Turbidity</div>
+              <div class="ov-value">
+                <span id="paramTurb">--</span>
+              </div>
+          </div>
+          <div class="param-row">
+            <div class="small">Pressure</div>
+              <div class="ov-value">
+                <span id="paramPressure">--</span>
+              </div>
+          </div>
+          <div class="param-row">
+            <div class="small">Internal Temp</div>
+              <div class="ov-value">
+                <span id="paramIntTemp">--</span>
+              </div>
+          </div>
+          <div class="param-row">
+            <div class="small">Acceleration</div>
+            <div class="ov-value">
+              X: <span id="paramAccX">--</span>
+              Y: <span id="paramAccY">--</span>
+              Z: <span id="paramAccZ">--</span>
+            </div>
+          </div>
+          <div class="param-row">
+            <div class="small">Gyroscopic</div>
+            <div class="ov-value">
+              X: <span id="paramGyroX">--</span>
+              Y: <span id="paramGyroY">--</span>
+              Z: <span id="paramGyroZ">--</span>
+            </div>
+          </div>
+          <div class="param-row">
+            <div class="small">External Temp</div>
+            <div class="ov-value" id="paramExtTemp">--</div>
+          </div>
+          <div class="param-row">
+            <div class="small">Conductivity</div>
+            <div class="ov-value" id="paramCond">--</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Simulation -->
+
+      <div class="card sim-card">
+        <div class="card-header">
+          <div class="small">3D SIMULATION</div>
+        </div>
+        <div class="sim-wrap" aria-hidden="false">
+          <div id="cansat-3d"></div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+ 
+
+    </div>
+
+    <!-- Second Row: Trend Charts and Recent Records -->
+    <div class="row second-row-container">
+      <div class="card main-dashboard-card">
+
+        <!-- Trend Charts Section -->
+        <div class="section-title small">TREND CHARTS</div>
+        <div class="trend-grid">
+          <!-- Row 1 -->
+          <div class="trend-card-item">
+            <div class="trend-title">TDS LEVEL</div>
+            <canvas id="tdsTrend"></canvas>
+          </div>
+          <div class="trend-card-item">
+            <div class="trend-title">TURBIDITY LEVEL</div>
+            <canvas id="turTrend"></canvas>
+          </div>
+          <div class="trend-card-item">
+            <div class="trend-title">PRESSURE LEVEL</div>
+            <canvas id="PreTrend"></canvas>
+          </div>
+          <!-- Row 2 -->
+          <div class="trend-card-item">
+            <div class="trend-title">INTERNAL TEMP LEVEL</div>
+            <canvas id="itempTrend"></canvas>
+          </div>
+          <div class="trend-card-item">
+            <div class="trend-title">EXTERNAL TEMP LEVEL</div>
+            <canvas id="etempTrend"></canvas>
+          </div>
+          <div class="trend-card-item">
+            <div class="trend-title">CONDUCTIVITY LEVEL</div>
+            <canvas id="condTrend"></canvas>
+          </div>
+        </div>
+
+        <!-- Recent Records Section -->
+        <div class="records-section" style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
+            <div class="small">RECENT RECORDS</div>
+            <div class="small">Rows: <span id="rowCount">0</span></div>
+          </div>
+          <div class="table-container">
+            <table id="recordsTable">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>TDS</th>
+                  <th>TUR</th>
+                  <th>PRE</th>
+                  <th>ITEMP</th>
+                  <th>ACC</th>
+                  <th>GYRO</th>
+                  <th>ETEMP</th>
+                  <th>COND</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- app script -->
+    <script src="appp.js"></script>
+    <script>
+      // Mobile toggle functionality
+      const navToggle = document.getElementById('navToggle');
+      const navMenu = document.getElementById('navMenu');
+
+      if (navToggle) {
+        navToggle.addEventListener('click', () => {
+          navMenu.classList.toggle('active');
+          navToggle.classList.toggle('active');
+        });
+      }
+
+      // Page navigation functionality
+      const navLinks = document.querySelectorAll('.nav-link');
+      const pages = {
+        'dashboard': document.getElementById('dashboard-page'),
+
+        'analytics': document.getElementById('analytics-page')
+      };
+
+      // Global function to show a page
+      window.showPage = function (targetId) {
+        // Normalize targetId
+        targetId = targetId.toLowerCase();
+
+        // Debug
+        console.log("Attempting to show page:", targetId);
+
+        // Update active nav link
+        navLinks.forEach(l => {
+          if (l.getAttribute('href').substring(1).toLowerCase() === targetId) {
+            l.classList.add('active');
+          } else {
+            l.classList.remove('active');
+          }
+        });
+
+        // Hide all pages
+        Object.values(pages).forEach(page => {
+          if (page) {
+            page.classList.remove('page-visible');
+            page.classList.add('page-hidden');
+          }
+        });
+
+        // Show target page
+        if (pages[targetId]) {
+          pages[targetId].classList.remove('page-hidden');
+          pages[targetId].classList.add('page-visible');
+          console.log("Page shown:", targetId);
+
+          // If analytics page, ensure chart is initialized
+          if (targetId === 'analytics' && window.initAnalyticsChart) {
+            setTimeout(window.initAnalyticsChart, 100);
+          }
+        } else {
+          console.error("Page not found:", targetId);
+        }
+
+        // Close mobile menu
+        if (navMenu) navMenu.classList.remove('active');
+        if (navToggle) navToggle.classList.remove('active');
+      };
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = link.getAttribute('href').substring(1).toLowerCase();
+          window.showPage(target);
+        });
+      });
+
+      // Export data functions - delegate to appp.js
+      function exportData(format) {
+        if (window.exportDataFromApp) {
+          window.exportDataFromApp(format);
+        } else {
+          alert('Export is not ready yet. Please wait for the data to load.');
+        }
+      }
+    </script>
+    
+    <script type="module" src="cansat3d.js"></script>
+    
+  
+</body>
+
+</html>
