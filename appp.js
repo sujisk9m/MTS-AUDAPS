@@ -20,28 +20,20 @@ let phNow, salNow, pressNow, turbNow, energyNow, loadNow, speedVal, leakPill, de
 
 let dummyIndex = 0;
 
-  const dummyDataset = Array.from({ length: 100 }, (_, i) => ({
-    depth: 5 + i * 0.5,
-    tds: 1800 + Math.sin(i / 5) * 150,
-    turbidity: 1.5 + Math.cos(i / 4) * 0.5,
-    pressure: 105 + Math.sin(i / 6) * 3,
-    intTemp: 30 + Math.sin(i / 7) * 4,
-    extTemp: 25 + Math.cos(i / 8) * 3,
-    conductivity: 55 + Math.sin(i / 3) * 5
-}));
-
-function simulateLiveData() {
-
-    const latest = dummyDataset[dummyIndex];
-
-    updateCharts(latest);  // ← your existing update logic
-
-    dummyIndex++;
-
-    if (dummyIndex >= dummyDataset.length) {
-        dummyIndex = 0;   // 🔁 restart from beginning
-    }
-}
+  const dummyDataset = Array.from({ length: 20 }, (_, i) => ({
+      tds: 1800 + Math.random() * 200,
+      turbidity: 1.5 + Math.random() * 0.5,
+      pressure: 105 + Math.random() * 5,
+      intTemp: 30 + Math.random() * 5,
+      extTemp: 25 + Math.random() * 5,
+      conductivity: 50 + Math.random() * 10,
+      accX: -1 + Math.random() * 2,
+      accY: -1 + Math.random() * 2,
+      accZ: -1 + Math.random() * 2,
+      gyroX: -20 + Math.random() * 40,
+      gyroY: -20 + Math.random() * 40,
+      gyroZ: -20 + Math.random() * 40
+  }));
 
 
 
@@ -52,7 +44,7 @@ window.onload = () => {
   initDOMElements();
   initCharts();
   setTimeout(initAnalyticsChart, 200);
-  setInterval(simulateLiveData, 1000);
+
 
 
   // Initialize pages with default/empty data so they aren't blank
@@ -616,4 +608,3 @@ function updateAnalyticsPage(rows) {
 window.initAnalyticsChart = initAnalyticsChart;
 window.updateAnalyticsPage = updateAnalyticsPage;
 window.exportDataFromApp = function (format) { alert("Export feature placeholder"); };
-
