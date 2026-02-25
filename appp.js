@@ -20,20 +20,23 @@ let phNow, salNow, pressNow, turbNow, energyNow, loadNow, speedVal, leakPill, de
 
 let dummyIndex = 0;
 
-  const dummyDataset = Array.from({ length: 20 }, (_, i) => ({
-      tds: 1800 + Math.random() * 200,
-      turbidity: 1.5 + Math.random() * 0.5,
-      pressure: 105 + Math.random() * 5,
-      intTemp: 30 + Math.random() * 5,
-      extTemp: 25 + Math.random() * 5,
-      conductivity: 50 + Math.random() * 10,
-      accX: -1 + Math.random() * 2,
-      accY: -1 + Math.random() * 2,
-      accZ: -1 + Math.random() * 2,
-      gyroX: -20 + Math.random() * 40,
-      gyroY: -20 + Math.random() * 40,
-      gyroZ: -20 + Math.random() * 40
-  }));
+  // ===== LARGE DUMMY DATASET (200 points) =====
+  const dummyDataset = Array.from({ length: 200 }, (_, i) => ({
+      tds: 1800 + Math.sin(i / 5) * 100 + Math.random() * 50,
+      turbidity: 1.5 + Math.cos(i / 7) * 0.4 + Math.random() * 0.2,
+      pressure: 105 + Math.sin(i / 6) * 4,
+      intTemp: 30 + Math.sin(i / 8) * 3,
+      extTemp: 25 + Math.cos(i / 10) * 2,
+      conductivity: 50 + Math.sin(i / 9) * 6,
+
+      accX: Math.sin(i / 4),
+      accY: Math.cos(i / 4),
+      accZ: Math.sin(i / 3),
+
+      gyroX: Math.sin(i / 5) * 30,
+      gyroY: Math.cos(i / 5) * 30,
+      gyroZ: Math.sin(i / 6) * 30
+}));
 
 
 
@@ -422,7 +425,7 @@ function applyRowsToUI() {
         tdsTrendChart.data.labels.push("");
         tdsTrendChart.data.datasets[0].data.push(latest.tds);
 
-        if (tdsTrendChart.data.labels.length > 20) {
+        if (tdsTrendChart.data.labels.length > 50) {
             tdsTrendChart.data.labels.shift();
             tdsTrendChart.data.datasets[0].data.shift();
         }
@@ -435,7 +438,7 @@ function applyRowsToUI() {
         turbTrendChart.data.labels.push("");
         turbTrendChart.data.datasets[0].data.push(latest.turbidity);
 
-        if (turbTrendChart.data.labels.length > 20) {
+        if (turbTrendChart.data.labels.length > 50) {
             turbTrendChart.data.labels.shift();
             turbTrendChart.data.datasets[0].data.shift();
         }
@@ -452,7 +455,7 @@ function applyRowsToUI() {
             Number(latest.pressure)
         );
 
-        if (pressTrendChart.data.labels.length > 20) {
+        if (pressTrendChart.data.labels.length > 50) {
             pressTrendChart.data.labels.shift();
             pressTrendChart.data.datasets[0].data.shift();
         }
@@ -471,7 +474,7 @@ function applyRowsToUI() {
             Number(latest.conductivity)
         );
 
-        if (condTrendChart.data.labels.length > 20) {
+        if (condTrendChart.data.labels.length > 50) {
             condTrendChart.data.labels.shift();
             condTrendChart.data.datasets[0].data.shift();
         }
@@ -485,7 +488,7 @@ function applyRowsToUI() {
         itempTrendChart.data.labels.push("");
         itempTrendChart.data.datasets[0].data.push(Number(latest.intTemp));
 
-        if (itempTrendChart.data.labels.length > 20) {
+        if (itempTrendChart.data.labels.length > 50) {
             itempTrendChart.data.labels.shift();
             itempTrendChart.data.datasets[0].data.shift();
         }
@@ -499,7 +502,7 @@ function applyRowsToUI() {
         etempTrendChart.data.labels.push("");
         etempTrendChart.data.datasets[0].data.push(Number(latest.extTemp));
 
-        if (etempTrendChart.data.labels.length > 20) {
+        if (etempTrendChart.data.labels.length > 50) {
             etempTrendChart.data.labels.shift();
             etempTrendChart.data.datasets[0].data.shift();
         }
@@ -509,7 +512,7 @@ function applyRowsToUI() {
 }
 
 // ===== START DUMMY ANIMATION =====
-  function startDummyFeed() {
+    function startDummyFeed() {
 
       setInterval(() => {
 
@@ -519,12 +522,13 @@ function applyRowsToUI() {
           applyRowsToUI();
 
           dummyIndex++;
+
+          // Infinite smooth loop
           if (dummyIndex >= dummyDataset.length) {
               dummyIndex = 0;
           }
 
-      }, 1000);
-
+      }, 1000);  // 1 second update
   }
 
 
